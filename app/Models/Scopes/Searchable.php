@@ -2,6 +2,8 @@
 
 namespace App\Models\Scopes;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait Searchable
 {
     /**
@@ -12,7 +14,7 @@ trait Searchable
      * @return void
      */
     public function scopeSearchLatestPaginated(
-        $query,
+        Builder $query,
         string $search,
         $paginationQuantity = 10
     ) {
@@ -30,7 +32,7 @@ trait Searchable
      * @param [type] $search
      * @return void
      */
-    public function scopeSearch($query, $search)
+    public function scopeSearch(Builder $query, $search)
     {
         $query->where(function ($query) use ($search) {
             foreach ($this->getSearchableFields() as $field) {
@@ -72,4 +74,25 @@ trait Searchable
             ->getSchemaBuilder()
             ->getColumnListing($tableName);
     }
+
+    public function scopeSearchActive(Builder $query, ?bool $param): Builder
+    {
+        if (is_bool($param)) {
+            $query->where('is_done', $param);
+        }
+        return $query;
+    }
+
+    public function scopeOrderingByDate(Builder $query, ?string $param, string $field = 'created_at'): Builder
+    {
+        if (strtolower($param) === 'asc') {
+            $query->orderBy($field);
+        } elseif (strtolower($param) === 'desc') {
+            $query->orderByDesc($field);
+        } else {
+            $query->latest();
+        }
+        return $query;
+    }
+
 }

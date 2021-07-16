@@ -28,6 +28,7 @@ class TodoUpdateRequest extends FormRequest
             'content' => ['nullable', 'max:255', 'string'],
             'due_date' => ['nullable', 'date'],
             'is_done' => ['required', 'boolean'],
+            'tags' => ['nullable', 'array']
         ];
     }
 }

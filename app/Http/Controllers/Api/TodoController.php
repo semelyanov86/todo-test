@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\StoreToDoAction;
+use App\Actions\UpdateTagAction;
 use App\Models\Todo;
+use App\Transformers\TodoTransformer;
 use Illuminate\Http\Request;
 use App\Http\Resources\TodoResource;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TodoCollection;
 use App\Http\Requests\TodoStoreRequest;
 use App\Http\Requests\TodoUpdateRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class TodoController extends Controller
 {
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $this->authorize('view-any', Todo::class);
@@ -23,61 +23,44 @@ class TodoController extends Controller
         $search = $request->get('search', '');
 
         $todos = Todo::search($search)
-            ->latest()
+            ->searchActive($request->has('is_done') ? $request->boolean('is_done') : null)
+            ->orderingByDate($request->input('due_order'), 'due_date')
+            ->orderingByDate($request->input('created_at'))
             ->paginate();
 
-        return new TodoCollection($todos);
+        return fractal($todos, new TodoTransformer())->parseIncludes(['tags'])->respond();
     }
 
-    /**
-     * @param \App\Http\Requests\TodoStoreRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TodoStoreRequest $request)
     {
         $this->authorize('create', Todo::class);
 
         $validated = $request->validated();
 
-        $todo = Todo::create($validated);
+        $todo = StoreToDoAction::run($validated);
 
-        return new TodoResource($todo);
+        return fractal($todo, new TodoTransformer())->parseIncludes(['tags'])->respond(Response::HTTP_CREATED);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Todo $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, Todo $todo)
+    public function show(Request $request, Todo $todo): \Illuminate\Http\JsonResponse
     {
         $this->authorize('view', $todo);
 
-        return new TodoResource($todo);
+        return fractal($todo, new TodoTransformer())->parseIncludes(['tags'])->respond();
     }
 
-    /**
-     * @param \App\Http\Requests\TodoUpdateRequest $request
-     * @param \App\Models\Todo $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(TodoUpdateRequest $request, Todo $todo)
+    public function update(TodoUpdateRequest $request, int $todo): \Illuminate\Http\JsonResponse
     {
         $this->authorize('update', $todo);
 
         $validated = $request->validated();
 
-        $todo->update($validated);
+        $todoModel = UpdateTagAction::run($todo, $validated);
 
-        return new TodoResource($todo);
+        return fractal($todoModel, new TodoTransformer())->parseIncludes(['tags'])->respond(Response::HTTP_ACCEPTED);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Todo $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, Todo $todo)
+    public function destroy(Request $request, Todo $todo): \Illuminate\Http\Response
     {
         $this->authorize('delete', $todo);
 

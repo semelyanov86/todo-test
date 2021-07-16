@@ -9,10 +9,6 @@ use App\Http\Requests\TagUpdateRequest;
 
 class TagController extends Controller
 {
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $this->authorize('view-any', Tag::class);
@@ -26,10 +22,6 @@ class TagController extends Controller
         return view('app.tags.index', compact('tags', 'search'));
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $this->authorize('create', Tag::class);
@@ -37,10 +29,6 @@ class TagController extends Controller
         return view('app.tags.create');
     }
 
-    /**
-     * @param \App\Http\Requests\TagStoreRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TagStoreRequest $request)
     {
         $this->authorize('create', Tag::class);
@@ -54,11 +42,6 @@ class TagController extends Controller
             ->withSuccess(__('crud.common.created'));
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, Tag $tag)
     {
         $this->authorize('view', $tag);
@@ -66,11 +49,6 @@ class TagController extends Controller
         return view('app.tags.show', compact('tag'));
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, Tag $tag)
     {
         $this->authorize('update', $tag);
@@ -78,11 +56,6 @@ class TagController extends Controller
         return view('app.tags.edit', compact('tag'));
     }
 
-    /**
-     * @param \App\Http\Requests\TagUpdateRequest $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
     public function update(TagUpdateRequest $request, Tag $tag)
     {
         $this->authorize('update', $tag);
@@ -96,11 +69,6 @@ class TagController extends Controller
             ->withSuccess(__('crud.common.saved'));
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, Tag $tag)
     {
         $this->authorize('delete', $tag);

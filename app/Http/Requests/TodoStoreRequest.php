@@ -11,7 +11,7 @@ class TodoStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,13 +21,14 @@ class TodoStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['required', 'max:255', 'string'],
             'content' => ['nullable', 'max:255', 'string'],
             'due_date' => ['nullable', 'date'],
             'is_done' => ['required', 'boolean'],
+            'tags' => ['nullable', 'array']
         ];
     }
 }

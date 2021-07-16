@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Tag;
+use App\Transformers\TagTransformer;
 use Illuminate\Http\Request;
 use App\Http\Resources\TagResource;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagCollection;
 use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
+use Symfony\Component\HttpFoundation\Response;
 
-class TagController extends Controller
+final class TagController extends Controller
 {
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+    public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $this->authorize('view-any', Tag::class);
 
@@ -26,14 +25,10 @@ class TagController extends Controller
             ->latest()
             ->paginate();
 
-        return new TagCollection($tags);
+        return fractal($tags, new TagTransformer())->respond();
     }
 
-    /**
-     * @param \App\Http\Requests\TagStoreRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(TagStoreRequest $request)
+    public function store(TagStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->authorize('create', Tag::class);
 
@@ -41,27 +36,17 @@ class TagController extends Controller
 
         $tag = Tag::create($validated);
 
-        return new TagResource($tag);
+        return fractal($tag, new TagTransformer())->respond(Response::HTTP_CREATED);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, Tag $tag)
+    public function show(Request $request, Tag $tag): \Illuminate\Http\JsonResponse
     {
         $this->authorize('view', $tag);
 
-        return new TagResource($tag);
+        return fractal($tag, new TagTransformer())->respond();
     }
 
-    /**
-     * @param \App\Http\Requests\TagUpdateRequest $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(TagUpdateRequest $request, Tag $tag)
+    public function update(TagUpdateRequest $request, Tag $tag): \Illuminate\Http\JsonResponse
     {
         $this->authorize('update', $tag);
 
@@ -69,15 +54,10 @@ class TagController extends Controller
 
         $tag->update($validated);
 
-        return new TagResource($tag);
+        return fractal($tag, new TagTransformer())->respond(Response::HTTP_ACCEPTED);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, Tag $tag)
+    public function destroy(Request $request, Tag $tag): \Illuminate\Http\Response
     {
         $this->authorize('delete', $tag);
 

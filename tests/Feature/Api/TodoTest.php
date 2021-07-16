@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Api;
 
+use App\Actions\StoreTagsAction;
+use App\Actions\StoreToDoAction;
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Todo;
 
@@ -67,17 +70,21 @@ class TodoTest extends TestCase
         $data = [
             'title' => $this->faker->sentence(10),
             'content' => $this->faker->text,
-            'due_date' => $this->faker->dateTime,
+            'due_date' => '2021-07-05',
             'is_done' => $this->faker->boolean,
         ];
+        try {
+            $response = $this->putJson(route('api.todos.update', $todo), $data);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            $this->assertFalse(true, $exception->getMessage());
+        }
 
-        $response = $this->putJson(route('api.todos.update', $todo), $data);
 
         $data['id'] = $todo->id;
 
         $this->assertDatabaseHas('todos', $data);
-
-        $response->assertOk()->assertJsonFragment($data);
+        $data['due_date'] = '2021-07-05T00:00:00.000000Z';
+        $response->assertStatus(202)->assertJsonFragment($data);
     }
 
     /**
@@ -92,5 +99,40 @@ class TodoTest extends TestCase
         $this->assertDeleted($todo);
 
         $response->assertNoContent();
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_manage_tags_during_creation()
+    {
+        Tag::create(['name' => 'first']);
+
+        StoreTagsAction::run(['first', 'second']);
+
+        $this->assertDatabaseCount('tags', 2);
+        $this->assertDatabaseHas('tags', ['name' => 'second']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_create_todo_with_tags()
+    {
+        /** @var Todo $todo */
+        $todo = StoreToDoAction::run([
+            'title' => 'title field',
+            'content' => 'content field',
+            'due_date' => '2021-09-09',
+            'is_done' => false,
+            'tags' => ['one', 'two']
+        ]);
+        $this->assertDatabaseHas('todos', [
+            'title' => 'title field',
+            'content' => 'content field'
+        ]);
+        $this->assertDatabaseHas('tags', ['name' => 'one']);
+        $this->assertDatabaseHas('tags', ['name' => 'two']);
+        $this->assertEquals(2, $todo->tags->count());
     }
 }

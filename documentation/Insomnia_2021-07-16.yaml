@@ -1,0 +1,375 @@
+_type: export
+__export_format: 4
+__export_date: 2021-07-16T18:51:35.207Z
+__export_source: insomnia.desktop.app:v2021.4.0
+resources:
+  - _id: req_04060f3cac12445782ba335a6e6cb8bb
+    parentId: fld_d4a796a120934c6bb0f64a15e7595445
+    modified: 1626461141530
+    created: 1626461112350
+    url: "{{ _.BASE_URL }}tags"
+    name: Tags List
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - id: pair_b8541ccf47e24166b3bfabca1f08dfa0
+        name: Accept
+        value: application/json
+        description: ""
+      - id: pair_2a24fe0bf9eb40e3b1cd22eafacd4564
+        name: Content-Type
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626461112350
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_d4a796a120934c6bb0f64a15e7595445
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626460982888
+    created: 1626460982888
+    name: Tags
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1626460982888
+    _type: request_group
+  - _id: wrk_b5845064069d4aaeb453f12e2a696ab2
+    parentId: null
+    modified: 1626445342839
+    created: 1626445342839
+    name: Todos
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_72a8d40165cc46ed83f1c6867e29aefe
+    parentId: fld_d4a796a120934c6bb0f64a15e7595445
+    modified: 1626461227094
+    created: 1626461223860
+    url: "{{ _.BASE_URL }}tags/1"
+    name: Tags By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - id: pair_b8541ccf47e24166b3bfabca1f08dfa0
+        name: Accept
+        value: application/json
+        description: ""
+      - id: pair_2a24fe0bf9eb40e3b1cd22eafacd4564
+        name: Content-Type
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626461010424
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8c01151a26d444638ce792d17ba46d36
+    parentId: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    modified: 1626460942789
+    created: 1626460908498
+    url: "{{ _.BASE_URL }}todos/3"
+    name: Delete Todo
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - id: pair_3cc21d52253946499db014cb0bf97366
+        name: Accept
+        value: application/json
+        description: ""
+      - id: pair_48e3506a436040d992ae59e13d8e0495
+        name: Content-Type
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626460908498
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626445662850
+    created: 1626445662850
+    name: TODOS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1626445662851
+    _type: request_group
+  - _id: req_55e083da8a7d40f6bb34b2fe409d299c
+    parentId: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    modified: 1626460597651
+    created: 1626460536687
+    url: "{{ _.BASE_URL }}todos/5"
+    name: Update Todo
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Changed five",
+        	"content": "Content with changed five",
+        	"due_date": "2021-09-11",
+        	"is_done": true,
+        	"tags": ["third", "four"]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1810bd1a684a44ad8706cc63a7abf142
+      - id: pair_aa5bf072b9aa4e25b536841ae06c33ad
+        name: Accept
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626460536687
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c453f4e5bf8b476ba5cd55433a372c5c
+    parentId: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    modified: 1626460211504
+    created: 1626459528926
+    url: "{{ _.BASE_URL }}todos/7"
+    name: Show To Do By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - id: pair_c10b5202180f4d4ab32de7341fde6918
+        name: Accept
+        value: application/json
+        description: ""
+      - id: pair_c0a16e1bb9c24f6591fb3675bcbadc22
+        name: Content-Type
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626459528926
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5642cf493f1e49c18608db9a4dd78a72
+    parentId: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    modified: 1626460365179
+    created: 1626447353093
+    url: "{{ _.BASE_URL }}todos"
+    name: Create Todo
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Super four",
+        	"content": "Super four content!",
+        	"due_date": "2021-09-10",
+        	"is_done": false,
+        	"tags": ["third", "four"]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_070d438a87dc4313ac5d57c80e5cdf02
+      - id: pair_df765f81834f4c13b12da1d0fe7151a5
+        name: Accept
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626447353093
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ceea20ae5c4b497e87aeae515321aea0
+    parentId: fld_af3cb5bb8b3a4223bb7dbf13f0745931
+    modified: 1626461454923
+    created: 1626445677610
+    url: "{{ _.BASE_URL }}todos"
+    name: Todos Index
+    description: >-
+      Acceptable get parameters as filters:
+
+      * `is_done` - boolean value.
+
+      * `due_order` - ordering todos by asc or desc. Accept only `asc` or `desc` value
+
+      * `search` - pass any value to filter by title and content
+
+      * `created_at` - order by created_at field, pass asc or desc value
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_07d70d1beaad4368869eee9aedc0de8b
+        name: is_done
+        value: "true"
+        description: ""
+        disabled: true
+      - id: pair_5f77daad12ec48e4a5aefb063ae7dfa2
+        name: due_order
+        value: desc
+        description: ""
+        disabled: false
+      - id: pair_ae445a6425a64ef5a9458181faa3d32a
+        name: search
+        value: Ipsa
+        description: ""
+        disabled: true
+      - id: pair_ba89d44ef7364cd69021decba09397ea
+        name: created_at
+        value: desc
+        description: ""
+        disabled: true
+    headers:
+      - id: pair_d216baf88a6f49f194150b132ec377e7
+        name: Content-Type
+        value: application/json
+        description: ""
+      - id: pair_955ab8afc8b045d288524356d2c26f4a
+        name: Accept
+        value: application/json
+        description: ""
+    authentication:
+      type: bearer
+      token: "{{ _.TOKEN }}"
+    metaSortKey: -1626445677610
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0cfceed44543492097e55e950e259984
+    parentId: fld_8d611b6b636e4d47ac0cbc4a25232edb
+    modified: 1626445638060
+    created: 1626445430796
+    url: "{{ _.BASE_URL }}login"
+    name: Get Token
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "{{ _.LOGIN }}",
+        	"password": "{{ _.PASSWORD }}",
+        	"device_name": "Insomnia"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_8eb2aa4ed3144637957075c574a58d32
+      - id: pair_38233413f4a14e19a8eae8953731cd02
+        name: Accept
+        value: application/json
+        description: ""
+    authentication: {}
+    metaSortKey: -1626445430796
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_8d611b6b636e4d47ac0cbc4a25232edb
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626445400125
+    created: 1626445400125
+    name: Auth
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1626445400125
+    _type: request_group
+  - _id: env_0df3fbada6aacd552d7947215009dcb7349e945f
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626445651922
+    created: 1626445343216
+    name: Base Environment
+    data:
+      BASE_URL: http://todo.test:8000/api/
+      LOGIN: admin@admin.com
+      PASSWORD: admin
+      TOKEN: 2|zrdJIRgw1yRSvgFKsbGKWHqSLgAKkG62rYephXM6
+    dataPropertyOrder:
+      "&":
+        - BASE_URL
+        - LOGIN
+        - PASSWORD
+        - TOKEN
+    color: null
+    isPrivate: false
+    metaSortKey: 1626445343216
+    _type: environment
+  - _id: jar_0df3fbada6aacd552d7947215009dcb7349e945f
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626445343235
+    created: 1626445343235
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_6a4e22745f5f41d9b8e65e1ef339e23c
+    parentId: wrk_b5845064069d4aaeb453f12e2a696ab2
+    modified: 1626445342860
+    created: 1626445342860
+    fileName: Todos
+    contents: ""
+    contentType: yaml
+    _type: api_spec

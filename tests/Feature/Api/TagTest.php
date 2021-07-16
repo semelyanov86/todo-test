@@ -74,7 +74,7 @@ class TagTest extends TestCase
 
         $this->assertDatabaseHas('tags', $data);
 
-        $response->assertOk()->assertJsonFragment($data);
+        $response->assertStatus(202)->assertJsonFragment($data);
     }
 
     /**
